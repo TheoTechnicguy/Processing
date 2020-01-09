@@ -1,12 +1,12 @@
-//int x = 1;
-//int y = 1;
-//int step=20;
-//float dx = step;
-//float dy = step;
-//boolean start = true;
-//float FF = 1.01;
-//float lmx=mouseX;
-//float lmy=mouseY;
+int x = 1;
+int y = 1;
+int step=20;
+float dx = step;
+float dy = step;
+boolean start = true;
+float FF = 1.01;
+float lmx=mouseX;
+float lmy=mouseY;
 
 void setup() {
   size(2000, 1000);

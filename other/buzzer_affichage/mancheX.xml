@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<joueurs>
+<joueur>
+	<ref>Rouge1</ref>
+	<nom>Alice</nom>
+</joueur>
+<joueur>
+	<ref>Rouge2</ref>
+	<nom>Céline</nom>
+</joueur>
+	<joueur>
+	<ref>Rouge3</ref>
+	<nom>Corentin</nom>
+</joueur>
+	<joueur>
+	<ref>Rouge4</ref>
+	<nom>Alexis</nom>
+</joueur>
+	<joueur>
+	<ref>Rouge5</ref>
+	<nom>Adèle</nom>
+</joueur>
+	<joueur>
+	<ref>Noir1</ref>
+	<nom>Kelly</nom>
+</joueur>
+	<joueur>
+	<ref>Noir2</ref>
+	<nom>Aurélie</nom>
+</joueur>
+	<joueur>
+	<ref>Noir3</ref>
+	<nom>Camille</nom>
+</joueur>
+	<joueur>
+	<ref>Noir4</ref>
+	<nom>Mathilde</nom>
+</joueur>
+	<joueur>
+	<ref>Noir5</ref>
+	<nom>Alice</nom>
+</joueur>
+</joueurs>

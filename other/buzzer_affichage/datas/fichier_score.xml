@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scores>
+  <Score>
+    <date>10/10/2019</date>
+    <rouge>12</rouge>
+    <noir>13</noir>
+  </Score>
+  <Score>
+    <date>10/9/2019</date>
+    <rouge>0</rouge>
+    <noir>0</noir>
+  </Score>
+  <Score>
+    <date>10/11/2019</date>
+    <rouge>2</rouge>
+    <noir>3</noir>
+  </Score>
+  <Score>
+    <date>11/11/2019</date>
+    <rouge>0</rouge>
+    <noir>0</noir>
+  </Score>
+  <Score>
+    <date>12/11/2019</date>
+    <rouge>79</rouge>
+    <noir>107</noir>
+  </Score>
+  <Score>
+    <date>14/11/2019</date>
+    <rouge>0</rouge>
+    <noir>0</noir>
+  </Score>
+</Scores>
