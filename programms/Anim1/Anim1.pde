@@ -2,6 +2,7 @@
 // Autor: Nicolas Fischer
 // version: 0.0.0.1
 // program: processing
+// ext: pde
 // ---------------------------------------
 
 // --- init ---
@@ -13,7 +14,7 @@ float x = 0;
 float y = -200; // !! Y is backwards!
 float v = 4;
 float t = 0;
-float x0 = 0;
+//float x0 = 0; // unnessesary w/ translate
 float FPS = 25;
 
 //  object specs
@@ -32,7 +33,7 @@ void setup() {
 void draw() {
   background(200);
   repere(50, 2); // Fonction changed!
-  x=x0+v*t;
+  x=v*t;
   t=t+(1/FPS);
   //println(t);
 
