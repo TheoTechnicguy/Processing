@@ -30,6 +30,8 @@ float t2 = 0;
 
 //    Other struff
 float FPS = 60;
+boolean back=false;
+boolean stop=false;
 //  object specs
 float RAY = 25;
 
@@ -53,8 +55,17 @@ void draw() {
   background(200);
   repere(50, MinPx); // Fonction changed!
   x=vx0*t;
-  y=((-a/2)*(pow(t, 2)))+(vy0*t)+y0;
-  t=t+(1/FPS);
+  if (run==1){
+    
+  }
+  y=((-a/2)*(pow(t, 2)))+(vy0*t)+y0+y1;
+
+  if (back) {
+    t=t-(1/FPS);
+  } else {
+    t=t+(1/FPS);
+  }
+
   //println(t);
 
   circle(x*MinPx, -y*MinPx, RAY);
@@ -62,9 +73,25 @@ void draw() {
   text(x+" m", x*MinPx-RAY/4, -(y*MinPx+RAY/2+5));
   text((t+t2)+" s", width-250, -250);
 
-  if (x!=0 && y<=0) {
-    t2=t;
-    t=0;
+  if (x!=0 && y<=(RAY/MinPx)) {
+    println("Backward");
+    back=true;
+  }
+  //println(back);
+  if (back && x<=0) {
+    println("forward");
+    back=false;
   }
 }
 // --- END draw ---
+
+void mouseClicked() {
+  println(stop);
+  if (!stop){
+    noLoop();
+    stop=true;
+  } else if (stop) {
+    loop();
+    stop=false;
+  }
+}
