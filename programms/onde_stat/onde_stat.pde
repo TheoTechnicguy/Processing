@@ -32,11 +32,16 @@ void setup() {
 // --- draw ---
 void draw() {
   background(200);
+  // --- Repere ---
+  stroke(0);
+  line(0, height/2, width, height/2);
+
+  // --- end Repere ---
   t=t+(1/FPS);
-  println("t:"+t);
-  println("FPS:"+FPS);
-  println("1/:"+1/FPS);
-  println("t+:"+t+1/FPS);
+  //println("t:"+t);
+  //println("FPS:"+FPS);
+  //println("1/:"+1/FPS);
+  //println("t+:"+t+1/FPS);
 
   // progressive wave L-R
   stroke(255, 0, 0);
@@ -51,7 +56,7 @@ void draw() {
   // progressive wave R-L
   stroke(0, 255, 0);
   beginShape();
-  for (int x=0; x==width; x=x+1) {
+  for (int x=width; x>=0; x-=1) {
     y=(-A*sin(2*PI*(t/T-x/lambda)))+height/2;
     vertex(x, y);
     //point(x,y);
@@ -62,7 +67,7 @@ void draw() {
   stroke(0, 0, 255);
   beginShape();
   for (int x=0; x<width; x+=1) {
-    y=(-A*sin(2*PI*(t/T-(x+lambda/4)/lambda))+A*sin(2*PI*(t/T-(x+lambda/4)/lambda)))+height/2;
+    y=(A*sin(2*PI*(t/T-(x+lambda/4)/lambda))+A*sin(2*PI*(t/T-(x+lambda/4)/lambda)))+height/2;
     vertex(x, y);
     //point(x,y);
   }
