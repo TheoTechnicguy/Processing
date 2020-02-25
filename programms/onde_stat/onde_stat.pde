@@ -16,8 +16,8 @@ float t;
 float T=2*PI/OMEGA;
 float y;
 float lambda = 200;
-float PHI=.31;
 int mouse_x;
+float ymax;
 
 int stop = 0;
 boolean inited=false;
@@ -51,11 +51,6 @@ void setup() {
 
 // --- draw ---
 void draw() {
-  //if (!inited) {
-  //setup_run();
-  //}
-  //inited=true;
-
   background(255);
 
   // --- Repere ---
@@ -91,9 +86,9 @@ void draw() {
   text("x (cm)", width-263, -8);
 
   // Y-Axis graduation
-  for (float x=-height/2; x<=height; x+=0.5) {
-    if (int(-x*100)!=0) {
-      text(int(-x*100), 5, x*lambda-5);
+  for (float x=-height/2; x<=height; x+=.5) {
+    if (int(-x*20)!=0) {
+      text(int(-x*20), 5, x*lambda-5);
     }
   }
   // X-Axis Title
@@ -105,19 +100,18 @@ void draw() {
   // --- end Repere ---
 
   // --- Frenel ---
-  stroke(0);
   ellipse(-lambda/2, 0, lambda, lambda);
+  strokeWeight(2);
   // lambda = 1/2 turn
   //println(OMEGA*t);
-  stroke(0, 255, 127);
+  stroke(0, 153, 51);
 
-  line(-lambda/2, 0, sin(OMEGA*(t+PHI))*(lambda/2)-lambda/2, cos(OMEGA*(t+PHI))*(lambda/2));
-  //println(sin(OMEGA*(t+PHI))*(lambda/2));
-
+  line(-lambda/2, 0, sin(OMEGA*(t+PI/2))*(lambda/2)-lambda/2, cos(OMEGA*(t+PI/2))*(lambda/2));
 
   // --- end Frenel ---
 
   // progressive wave L-R
+  strokeWeight(1);
   stroke(255, 0, 0);
   beginShape();
   for (int x=0; x<width; x+=1) {
@@ -153,8 +147,11 @@ void draw() {
   beginShape();
   for (int x=0; x<width; x+=1) {
     y=(A*sin(2*PI*(t/T-(x+lambda/4)/lambda))+A*sin(2*PI*(t/T+(x+lambda/4)/lambda)));//+height/2;
-    //line(-lambda/2, 0, x-3*lambda, y);
     vertex(x, y);
+
+    if (y>ymax) {
+      ymax=y;
+    }
 
     if (stop==1 && x==mouseX && mouseX > lambda) {
       fill(0, 0, 255);
@@ -164,6 +161,8 @@ void draw() {
     }
   }
   endShape();
+  text("max: "+ymax/10, 70, -((height/lambda)/2)*lambda+15);
+  ymax=0;
 
   if (stop==1 && mouseX > lambda) {
     stroke(0);
@@ -173,17 +172,15 @@ void draw() {
     t=t+(1/FPS);
   } else if (stop==2) {
     if (mouseX<mouse_x) {
-      t-=(mouse_x-mouseX)/10;
+      t-=(mouse_x-mouseX)/FPS;
       println(mouse_x-mouseX);
       mouse_x=mouseX;
     } else if (mouseX>mouse_x) {
-      t+=(mouseX-mouse_x)/10;
+      t+=(mouseX-mouse_x)/FPS;
       mouse_x=mouseX;
     }
   }
   //noLoop();
-  println(t);
-  println(mouseX);
 }
 // --- END draw ---
 
