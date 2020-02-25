@@ -1,6 +1,6 @@
 // File: onde_stat
 // Autor: Nicolas Fischer & Zurong Huang
-// version: 0.0.0.1
+// version: 1.0.0.1
 // program: processing
 // ext: pde
 // ---------------------------------------
@@ -24,22 +24,6 @@ boolean inited=false;
 float FPS=60;
 
 // -- END init ---
-
-void setup_run() {
-  textSize(30);
-  stroke(255);
-
-  for (int x=0; x<5; x+=1) {
-    background(0);
-    text("Initializing", 0, 30);
-
-    for (int i=0; i<3; i+=1) {
-      text(".", 150+i*10, 30);
-      //delay(1000);
-    }
-  }
-  delay(5000);
-}
 
 // --- setup ---
 void setup() {
@@ -92,22 +76,18 @@ void draw() {
     }
   }
   // X-Axis Title
-  text("y (cm)", 5, -((height/lambda)/2)*lambda+15);
-  //println(((height/lambda)/2)*lambda);
+  text("y (cm) max:", 5, -((height/lambda)/2)*lambda+15);
 
   noFill();
   strokeWeight(1);
   // --- end Repere ---
 
   // --- Frenel ---
-  ellipse(-lambda/2, 0, lambda, lambda);
+  circle(-lambda/2, 0, lambda);
   strokeWeight(2);
-  // lambda = 1/2 turn
-  //println(OMEGA*t);
   stroke(0, 153, 51);
 
   line(-lambda/2, 0, sin(OMEGA*(t+PI/2))*(lambda/2)-lambda/2, cos(OMEGA*(t+PI/2))*(lambda/2));
-
   // --- end Frenel ---
 
   // progressive wave L-R
@@ -121,7 +101,13 @@ void draw() {
       fill(255, 0, 0);
       circle(x-lambda, y, 10); 
       noFill();
-      text(-y, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*2);
+      if (mouseX<390) {
+        text(-y/10, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*3);
+      } else if (mouseX+10-lambda < width-1.5*lambda) {
+        text(-y/10, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*2);
+      } else {
+        text(-y/10, mouseX+10-1.5*lambda, -((height/lambda)/2)*lambda+18*2);
+      }
     }
   }
   endShape();
@@ -137,7 +123,13 @@ void draw() {
       fill(127, 0, 127);
       circle(x-lambda, y, 10); 
       noFill();
-      text(-y, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*3);
+      if (mouseX<390) {
+        text(-y/10, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*4);
+      } else if (mouseX+10-lambda < width-1.5*lambda) {
+        text(-y/10, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*3);
+      } else {
+        text(-y/10, mouseX+10-1.5*lambda, -((height/lambda)/2)*lambda+18*3);
+      }
     }
   }
   endShape();
@@ -149,6 +141,7 @@ void draw() {
     y=(A*sin(2*PI*(t/T-(x+lambda/4)/lambda))+A*sin(2*PI*(t/T+(x+lambda/4)/lambda)));//+height/2;
     vertex(x, y);
 
+    // get ymax of current shape
     if (y>ymax) {
       ymax=y;
     }
@@ -157,11 +150,18 @@ void draw() {
       fill(0, 0, 255);
       circle(x-lambda, y, 10); 
       noFill();
-      text(-y, mouseX+10-lambda, -((height/lambda)/2)*lambda+18);
+      if (mouseX<390) {
+        text(-y/10, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*2);
+      } else if (mouseX+10-lambda < width-1.5*lambda) {
+        text(-y/10, mouseX+10-lambda, -((height/lambda)/2)*lambda+18);
+      } else {
+        text(-y/10, mouseX+10-1.5*lambda, -((height/lambda)/2)*lambda+18);
+      }
     }
   }
   endShape();
-  text("max: "+ymax/10, 70, -((height/lambda)/2)*lambda+15);
+  // print ymax & reset
+  text(ymax/10, 115, -((height/lambda)/2)*lambda+15);
   ymax=0;
 
   if (stop==1 && mouseX > lambda) {
@@ -173,7 +173,6 @@ void draw() {
   } else if (stop==2) {
     if (mouseX<mouse_x) {
       t-=(mouse_x-mouseX)/FPS;
-      println(mouse_x-mouseX);
       mouse_x=mouseX;
     } else if (mouseX>mouse_x) {
       t+=(mouseX-mouse_x)/FPS;
