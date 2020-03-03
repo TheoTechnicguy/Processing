@@ -1,6 +1,6 @@
 // File: onde_stat
 // Autor: Nicolas Fischer & Zurong Huang
-// version: 1.0.0.1
+// version: 1.1.0.1
 // program: processing
 // ext: pde
 // ---------------------------------------
@@ -211,3 +211,5 @@ void mouseClicked() {
   }
 }
 // --- END mouseClicked ---
+
+// ***** END PROGRAM *****
