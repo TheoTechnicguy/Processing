@@ -1,6 +1,6 @@
 // File: onde_stat
 // Autor: Nicolas Fischer & Zurong Huang
-// version: 0.0.0.1
+// version: 1.0.0.1
 // program: processing
 // ext: pde
 // ---------------------------------------
@@ -16,30 +16,14 @@ float t;
 float T=2*PI/OMEGA;
 float y;
 float lambda = 200;
-float PHI=.31;
 int mouse_x;
+float ymax;
 
 int stop = 0;
 boolean inited=false;
 float FPS=60;
 
 // -- END init ---
-
-void setup_run() {
-  textSize(30);
-  stroke(255);
-
-  for (int x=0; x<5; x+=1) {
-    background(0);
-    text("Initializing", 0, 30);
-
-    for (int i=0; i<3; i+=1) {
-      text(".", 150+i*10, 30);
-      //delay(1000);
-    }
-  }
-  delay(5000);
-}
 
 // --- setup ---
 void setup() {
@@ -51,11 +35,6 @@ void setup() {
 
 // --- draw ---
 void draw() {
-  //if (!inited) {
-  //setup_run();
-  //}
-  //inited=true;
-
   background(255);
 
   // --- Repere ---
@@ -91,33 +70,28 @@ void draw() {
   text("x (cm)", width-263, -8);
 
   // Y-Axis graduation
-  for (float x=-height/2; x<=height; x+=0.5) {
-    if (int(-x*100)!=0) {
-      text(int(-x*100), 5, x*lambda-5);
+  for (float x=-height/2; x<=height; x+=.5) {
+    if (int(-x*20)!=0) {
+      text(int(-x*20), 5, x*lambda-5);
     }
   }
   // X-Axis Title
-  text("y (cm)", 5, -((height/lambda)/2)*lambda+15);
-  //println(((height/lambda)/2)*lambda);
+  text("y (cm) max:", 5, -((height/lambda)/2)*lambda+15);
 
   noFill();
   strokeWeight(1);
   // --- end Repere ---
 
   // --- Frenel ---
-  stroke(0);
-  ellipse(-lambda/2, 0, lambda, lambda);
-  // lambda = 1/2 turn
-  //println(OMEGA*t);
-  stroke(0, 255, 127);
+  circle(-lambda/2, 0, lambda);
+  strokeWeight(2);
+  stroke(0, 153, 51);
 
-  line(-lambda/2, 0, sin(OMEGA*(t+PHI))*(lambda/2)-lambda/2, cos(OMEGA*(t+PHI))*(lambda/2));
-  //println(sin(OMEGA*(t+PHI))*(lambda/2));
-
-
+  line(-lambda/2, 0, sin(OMEGA*(t+PI/2))*(lambda/2)-lambda/2, cos(OMEGA*(t+PI/2))*(lambda/2));
   // --- end Frenel ---
 
   // progressive wave L-R
+  strokeWeight(1);
   stroke(255, 0, 0);
   beginShape();
   for (int x=0; x<width; x+=1) {
@@ -127,7 +101,13 @@ void draw() {
       fill(255, 0, 0);
       circle(x-lambda, y, 10); 
       noFill();
-      text(-y, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*2);
+      if (mouseX<390) {
+        text(-y/10, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*3);
+      } else if (mouseX+10-lambda < width-1.5*lambda) {
+        text(-y/10, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*2);
+      } else {
+        text(-y/10, mouseX+10-1.5*lambda, -((height/lambda)/2)*lambda+18*2);
+      }
     }
   }
   endShape();
@@ -143,7 +123,13 @@ void draw() {
       fill(127, 0, 127);
       circle(x-lambda, y, 10); 
       noFill();
-      text(-y, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*3);
+      if (mouseX<390) {
+        text(-y/10, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*4);
+      } else if (mouseX+10-lambda < width-1.5*lambda) {
+        text(-y/10, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*3);
+      } else {
+        text(-y/10, mouseX+10-1.5*lambda, -((height/lambda)/2)*lambda+18*3);
+      }
     }
   }
   endShape();
@@ -153,17 +139,30 @@ void draw() {
   beginShape();
   for (int x=0; x<width; x+=1) {
     y=(A*sin(2*PI*(t/T-(x+lambda/4)/lambda))+A*sin(2*PI*(t/T+(x+lambda/4)/lambda)));//+height/2;
-    //line(-lambda/2, 0, x-3*lambda, y);
     vertex(x, y);
+
+    // get ymax of current shape
+    if (y>ymax) {
+      ymax=y;
+    }
 
     if (stop==1 && x==mouseX && mouseX > lambda) {
       fill(0, 0, 255);
       circle(x-lambda, y, 10); 
       noFill();
-      text(-y, mouseX+10-lambda, -((height/lambda)/2)*lambda+18);
+      if (mouseX<390) {
+        text(-y/10, mouseX+10-lambda, -((height/lambda)/2)*lambda+18*2);
+      } else if (mouseX+10-lambda < width-1.5*lambda) {
+        text(-y/10, mouseX+10-lambda, -((height/lambda)/2)*lambda+18);
+      } else {
+        text(-y/10, mouseX+10-1.5*lambda, -((height/lambda)/2)*lambda+18);
+      }
     }
   }
   endShape();
+  // print ymax & reset
+  text(ymax/10, 115, -((height/lambda)/2)*lambda+15);
+  ymax=0;
 
   if (stop==1 && mouseX > lambda) {
     stroke(0);
@@ -173,17 +172,14 @@ void draw() {
     t=t+(1/FPS);
   } else if (stop==2) {
     if (mouseX<mouse_x) {
-      t-=(mouse_x-mouseX)/10;
-      println(mouse_x-mouseX);
+      t-=(mouse_x-mouseX)/FPS;
       mouse_x=mouseX;
     } else if (mouseX>mouse_x) {
-      t+=(mouseX-mouse_x)/10;
+      t+=(mouseX-mouse_x)/FPS;
       mouse_x=mouseX;
     }
   }
   //noLoop();
-  println(t);
-  println(mouseX);
 }
 // --- END draw ---
 
