@@ -18,9 +18,9 @@ float y;
 float lambda = 200;
 int mouse_x;
 float ymax;
+boolean do_init=true;
 
 int stop = 0;
-boolean inited=false;
 float FPS=60;
 
 // -- END init ---
@@ -35,7 +35,7 @@ void setup() {
 
 // --- draw ---
 void draw() {
-  background(255);
+  background(250);
 
   // --- Repere ---
   stroke(0);
@@ -179,14 +179,29 @@ void draw() {
       mouse_x=mouseX;
     }
   }
-  //noLoop();
+
+  if (do_init && t>=0.2) {
+    translate(-lambda, -height/2);
+    fill(127, 225);
+    rect(10, 10, width-20, height-20);
+    fill(#FFFFFF);
+    textSize(20);
+    text("Controles:", lambda+100, 100);
+    text("Click 1 = stop temps, analyse valeurs", lambda+100, 130);
+    text("Click 2 = changer valeur temps. Gauche = -; droite = +", lambda+100, 160);
+    text("Clicker pour continuer.", lambda+100, 200);
+    noLoop();
+  }
 }
 // --- END draw ---
 
 
 // --- mouseClicked ---
 void mouseClicked() {
-  if (stop==0) {
+  if (do_init) {
+    loop();
+    do_init=false;
+  } else if (stop==0) {
     stop=1;
   } else if (stop==1) {
     stop=2;
