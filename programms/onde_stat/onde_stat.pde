@@ -1,11 +1,12 @@
 // File: onde_stat
 // Autor: Nicolas Fischer & Zurong Huang
-// version: 1.1.0.1
+// version: 1.1.0.2
 // program: processing
 // ext: pde
 // ---------------------------------------
 
 // Notes:
+// LATEST PROGRAM: https://github.com/TheoTechnicguy/Processing/tree/master/programms/onde_stat
 
 
 // --- init ---
@@ -187,8 +188,8 @@ void draw() {
     fill(#FFFFFF);
     textSize(20);
     text("Controles:", lambda+100, 100);
-    text("Click 1 = stop temps, analyse valeurs", lambda+100, 130);
-    text("Click 2 = changer valeur temps. Gauche = -; droite = +", lambda+100, 160);
+    text("1e Click = stop temps, analyse valeurs", lambda+100, 130);
+    text("2e Click = changer valeur temps. Gauche = -; droite = +", lambda+100, 160);
     text("Clicker pour continuer.", lambda+100, 200);
     noLoop();
   }
